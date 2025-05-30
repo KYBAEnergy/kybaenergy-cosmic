@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KYBA Review Admin Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #1b1b1b; color: #f2c94c; padding: 1rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #444; padding: 0.5rem; }
+    th { background: #333; }
+  </style>
+</head>
+<body>
+  <h1>KYBA Review Admin Dashboard</h1>
+
+  <label for="projectSlugInput">Enter project slug:</label>
+  <input id="projectSlugInput" placeholder="e.g. kybaenergy" />
+  <button id="loadReviewsBtn">Load Reviews</button>
+
+  <table id="reviewsTable" hidden>
+    <thead>
+      <tr><th>Wallet</th><th>Review</th><th>Timestamp</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCEN...",
+      authDomain: "kyba-review.firebaseapp.com",
+      projectId: "kyba-review",
+      storageBucket: "kyba-review.appspot.com",
+      messagingSenderId: "1031079489278",
+      appId: "1:1031079489278:web:b1d8b36b9ef54cd12bcfb4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const loadBtn = document.getElementById('loadReviewsBtn');
+    const slugInput = document.getElementById('projectSlugInput');
+    const reviewsTable = document.getElementById('reviewsTable');
+    const tbody = reviewsTable.querySelector('tbody');
+
+    loadBtn.addEventListener('click', async () => {
+      const slug = slugInput.value.trim();
+      if (!slug) {
+        alert('Please enter a project slug.');
+        return;
+      }
+      const reviewsRef = collection(db, `reviews_${slug}`);
+      const q = query(reviewsRef, orderBy("timestamp", "desc"));
+      const querySnapshot = await getDocs(q);
+
+      tbody.innerHTML = '';
+      if (querySnapshot.empty) {
+        alert('No reviews found for this project.');
+        reviewsTable.hidden = true;
+        return;
+      }
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${data.wallet}</td>
+          <td>${data.text}</td>
+          <td>${new Date(data.timestamp.seconds * 1000).toLocaleString()}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      reviewsTable.hidden = false;
+    });
+  </script>
+</body>
+</html>
