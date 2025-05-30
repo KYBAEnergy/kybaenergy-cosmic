@@ -104,4 +104,22 @@
   // Initialize Firebase
   const app = firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+</script><!-- 👇 Your existing layout, images, content -->
+
+<!-- ✅ Place this at the very bottom of index.html -->
+<script type="module">
+  // your long Firebase + Wallet + Review code here
 </script>
+</body><button id="walletConnectBtn">Connect Wallet</button>
+<p id="walletStatus">Not connected</p>
+
+<button id="nftMintBtn">Mint NFT</button>
+<p id="mintStatus"></p>
+
+<form id="reviewForm">
+  <textarea id="reviewInput" placeholder="Write your review..."></textarea>
+  <button type="submit">Submit Review</button>
+</form>
+
+<div id="reviewsList"></div>
+</html>
