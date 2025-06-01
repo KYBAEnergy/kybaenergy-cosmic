@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Dashboard</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="firebaseConfig.js"></script>
+  </head>
+  <body>
+    <h2>Admin Dashboard</h2>
+    <div id="reviews"></div>
+
+    <script>
+      const db = firebase.firestore();
+      db.collection("reviews")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          const container = document.getElementById("reviews");
+          container.innerHTML = "";
+          snapshot.forEach((doc) => {
+            const review = document.createElement("p");
+            review.textContent = doc.data().text;
+            container.appendChild(review);
+          });
+        });
+    </script>
+  </body>
+</html>
