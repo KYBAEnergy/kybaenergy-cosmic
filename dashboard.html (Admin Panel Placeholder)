@@ -23,6 +23,16 @@
             container.appendChild(review);
           });
         });
-    </script>
+    </script>// firebaseConfig.js
+const firebaseConfig = {
+  apiKey: "AIzaSyAErfwWPKTKBpLC3eYXzNzaGarKq6L0bOA",
+  authDomain: "kyba-review.firebaseapp.com",
+  projectId: "kyba-review",
+  storageBucket: "kyba-review.firebasestorage.app",
+  messagingSenderId: "981955530893",
+  appId: "1:981955530893:web:84bfc6777a2b5a9fd7d2c4",
+  measurementId: "G-SKSXZTWCEQ"
+};
+firebase.initializeApp(firebaseConfig);
   </body>
 </html>
