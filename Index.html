@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KYBA Energy</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('awakening-nft-bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 2em;
+    }
+    h1 {
+      font-size: 4rem;
+      color: gold;
+      margin-bottom: 0.3em;
+      text-shadow: 0 0 10px gold;
+    }
+    h2 {
+      font-weight: 300;
+      color: #aad4ff;
+      margin-bottom: 1.5em;
+      text-shadow: 0 0 8px #aad4ff;
+    }
+    a.token-link {
+      display: inline-block;
+      background: #0051a3;
+      color: white;
+      padding: 1em 2em;
+      border-radius: 10px;
+      text-decoration: none;
+      margin: 0.5em;
+      font-weight: 700;
+      box-shadow: 0 0 8px #0051a3;
+      transition: background 0.3s ease;
+    }
+    a.token-link:hover {
+      background: #007bff;
+      box-shadow: 0 0 15px #007bff;
+    }
+    button {
+      background: gold;
+      border: none;
+      padding: 0.8em 1.5em;
+      border-radius: 5px;
+      font-weight: bold;
+      color: black;
+      cursor: pointer;
+      box-shadow: 0 0 10px gold;
+      margin-top: 1em;
+    }
+    textarea {
+      width: 80%;
+      height: 100px;
+      margin-top: 1em;
+      padding: 1em;
+      border-radius: 10px;
+      border: none;
+    }
+    #reviewsList {
+      margin-top: 2em;
+      text-align: left;
+      width: 80%;
+      max-width: 600px;
+    }
+    .review {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 1em;
+      margin-bottom: 1em;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>KYBA Energy</h1>
+  <h2>Awaken Your Full-Body Light</h2>
+
+  <div>
+    <a href="https://solscan.io/token/6SSKAutJncxaV21Kdw13vUmGtb1gGzwiqeGgcG4ABeMU" target="_blank" class="token-link">$KYBA</a>
+    <a href="#" class="token-link">$VIBE</a>
+    <a href="#" class="token-link">$MIND</a>
+    <a href="#" class="token-link">$POLR</a>
+    <a href="#" class="token-link">$SOLMOON</a>
+  </div>
+
+  <button id="connectWalletBtn">Connect Wallet</button>
+  <p id="walletStatus">Wallet not connected</p>
+
+  <button id="mintBtn">Mint NFT</button>
+  <p id="mintStatus">Minting coming soon...</p>
+
+  <form id="reviewForm">
+    <textarea id="reviewInput" placeholder="Leave a review..."></textarea>
+    <br />
+    <button type="submit">Submit Review</button>
+  </form>
+
+  <div id="reviewsList"></div>
+
+  <!-- Solana Wallet Adapter (Phantom Integration) -->
+  <script type="module">
+    let walletAddress = null;
+
+    const connectWalletBtn = document.getElementById('connectWalletBtn');
+    const walletStatus = document.getElementById('walletStatus');
+
+    connectWalletBtn.addEventListener('click', async () => {
+      if ('solana' in window) {
+        const provider = window.solana;
+        try {
+          const response = await provider.connect();
+          walletAddress = response.publicKey.toString();
+          walletStatus.textContent = `Connected: ${walletAddress}`;
+        } catch (err) {
+          walletStatus.textContent = 'Connection failed.';
+        }
+      } else {
+        walletStatus.textContent = 'Phantom Wallet not found. Please install it.';
+      }
+    });
+
+    // Placeholder review system (client-only, won't save)
+    const reviewForm = document.getElementById('reviewForm');
+    const reviewInput = document.getElementById('reviewInput');
+    const reviewsList = document.getElementById('reviewsList');
+
+    reviewForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const reviewText = reviewInput.value.trim();
+      if (reviewText) {
+        const div = document.createElement('div');
+        div.className = 'review';
+        div.textContent = reviewText;
+        reviewsList.prepend(div);
+        reviewInput.value = '';
+      }
+    });
+  </script>
+</body>
+</html>
