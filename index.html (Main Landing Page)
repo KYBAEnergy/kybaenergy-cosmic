@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KYBA Energy</title>
+  </head>
+  <body>
+    <h1>Welcome to KYBA Energy</h1>
+    <p>This is your main landing page. Wallet verification, NFT minting, reviews, and energy drops coming soon.</p>
+    <a href="review-widget.html">Go to Review Widget</a><br>
+    <a href="dashboard.html">Go to Admin Dashboard</a>
+  </body>
+</html>
